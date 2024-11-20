@@ -1,25 +1,38 @@
-import * as React from "react"
-import * as ProgressPrimitive from "@radix-ui/react-progress"
-import { cn } from "@/lib/utils"
+"use client";
 
-const Progress = React.forwardRef<
-  React.ElementRef<typeof ProgressPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
->(({ className, value, ...props }, ref) => (
-  <ProgressPrimitive.Root
-    ref={ref}
-    className={cn(
-      "relative h-4 w-full overflow-hidden rounded-full bg-secondary/20",
-      className
-    )}
-    {...props}
-  >
-    <ProgressPrimitive.Indicator
-      className="h-full w-full flex-1 bg-primary transition-all"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-    />
-  </ProgressPrimitive.Root>
-))
-Progress.displayName = ProgressPrimitive.Root.displayName
+import React, { forwardRef } from "react";
+import { cn } from "@/lib/utils";
 
-export { Progress }
+interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
+  value?: number;
+  max?: number;
+}
+
+const Progress = forwardRef<HTMLDivElement, ProgressProps>(
+  ({ className = '', value = 0, max = 100, ...props }, ref) => {
+    // Verifica se o valor de max é um número válido maior que 0, caso contrário, define como 100
+    const maxValue = typeof max === 'number' && max > 0 ? max : 100;
+    // Verifica se o valor é um número válido, caso contrário, define como 0
+    const progressValue = typeof value === 'number' && value >= 0 && value <= maxValue ? value : 0;
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "relative h-4 w-full overflow-hidden rounded-full bg-secondary/20",
+          className
+        )}
+        {...props}
+      >
+        <div
+          className="h-full bg-primary transition-all"
+          style={{ width: `${(progressValue / maxValue) * 100}%` }}
+        />
+      </div>
+    );
+  }
+);
+
+Progress.displayName = "Progress";
+
+export { Progress };

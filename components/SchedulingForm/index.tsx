@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { PersonalInfo } from "./steps/PersonalInfo";
 import { VehicleInfo } from "./steps/VehicleInfo";
 import { ServiceDate } from "./steps/ServiceDate";
@@ -52,10 +52,12 @@ export default function SchedulingForm() {
     saveFormData(formData);
   }, [formData]);
 
-  const progress = (currentStep / steps.length) * 100;
+  const progressValue = useMemo(() => {
+    return (currentStep / steps.length) * 100;
+  }, [currentStep]);
 
   const updateFormData = (stepData: any, step: string) => {
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [step]: stepData,
     }));
@@ -108,13 +110,13 @@ export default function SchedulingForm() {
     // Clear form data
     localStorage.removeItem("formData");
     
-    router.push('/');
+    router.push('/agendar/sucesso');
   };
 
   return (
     <div className="p-4 md:p-8">
       <div className="mb-8">
-        <Progress value={progress} className="h-2" />
+        <Progress value={progressValue} max={100}/>
         <StepHeader />
       </div>
 
@@ -122,7 +124,7 @@ export default function SchedulingForm() {
         {currentStep === 1 && (
           <PersonalInfo
             data={formData.personalInfo}
-            onNext={(data) => {
+            onNext={(data: any) => {
               updateFormData(data, "personalInfo");
               nextStep();
             }}
@@ -131,7 +133,7 @@ export default function SchedulingForm() {
         {currentStep === 2 && (
           <VehicleInfo
             data={formData.vehicleInfo}
-            onNext={(data) => {
+            onNext={(data: any) => {
               updateFormData(data, "vehicleInfo");
               nextStep();
             }}
@@ -141,7 +143,7 @@ export default function SchedulingForm() {
         {currentStep === 3 && (
           <ServiceDate
             data={formData.serviceDate}
-            onNext={(data) => {
+            onNext={(data: any) => {
               updateFormData(data, "serviceDate");
               nextStep();
             }}
@@ -151,7 +153,7 @@ export default function SchedulingForm() {
         {currentStep === 4 && (
           <ServiceDetails
             data={formData.serviceDetails}
-            onNext={(data) => {
+            onNext={(data: any) => {
               updateFormData(data, "serviceDetails");
               nextStep();
             }}
