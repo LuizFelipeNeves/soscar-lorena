@@ -14,6 +14,7 @@ export default function Navbar() {
   };
 
   const img = true;
+  const PROD = process.env.NODE_ENV === 'production' ? '' : 'https://soscar-lorena.vercel.app';
 
   return (
     <nav className="bg-secondary shadow-lg">
@@ -22,7 +23,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-primary mb-5 mt-5">
               {img ? (<Image
-                src="/images/logo.png"
+                src={PROD + '/images/logo.png'}
                 alt="SOS CAR's"
                 width={150}
                 height={40}

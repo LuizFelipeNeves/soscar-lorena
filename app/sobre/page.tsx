@@ -7,14 +7,37 @@ export const metadata: Metadata = {
   description: 'Conheça nossa história, valores e compromisso com a excelência em serviços automotivos.',
 };
 
+const team = [
+  {
+    name: "Carlos Silva",
+    role: "Diretor Técnico",
+    image: "/images/team/director.jpg",
+    description: "25 anos de experiência em mecânica automotiva"
+  },
+  {
+    name: "Ana Santos",
+    role: "Gerente de Atendimento",
+    image: "/images/team/manager.jpg",
+    description: "Especialista em experiência do cliente"
+  },
+  {
+    name: "Roberto Oliveira",
+    role: "Chefe de Mecânicos",
+    image: "/images/team/mechanic.jpg",
+    description: "Certificado em tecnologias automotivas avançadas"
+  }
+];
+
 export default function AboutPage() {
+  const PROD = process.env.NODE_ENV === 'production' ? '' : 'https://soscar-lorena.vercel.app';
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-[400px]">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <Image
-          src="/images/workshop-team.jpg"
+          src={`${PROD}/images/workshop-team.jpg`}
           alt="Equipe SOS CAR&apos;s"
           fill
           className="object-cover"
@@ -82,7 +105,7 @@ export default function AboutPage() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="/images/workshop-history.jpg"
+                src={`${PROD}/images/workshop-history.jpg`}
                 alt="História da SOS CAR&apos;s"
                 fill
                 className="object-cover"
@@ -103,7 +126,7 @@ export default function AboutPage() {
               <div key={member.name} className="text-center">
                 <div className="relative w-48 h-48 mx-auto mb-4 rounded-full overflow-hidden">
                   <Image
-                    src={member.image}
+                    src={`${PROD}${member.image}`}
                     alt={member.name}
                     fill
                     className="object-cover"
@@ -134,24 +157,3 @@ function ValueCard({ icon, title, description }: any) {
     </div>
   );
 }
-
-const team = [
-  {
-    name: "Carlos Silva",
-    role: "Diretor Técnico",
-    image: "/images/team/director.jpg",
-    description: "25 anos de experiência em mecânica automotiva"
-  },
-  {
-    name: "Ana Santos",
-    role: "Gerente de Atendimento",
-    image: "/images/team/manager.jpg",
-    description: "Especialista em experiência do cliente"
-  },
-  {
-    name: "Roberto Oliveira",
-    role: "Chefe de Mecânicos",
-    image: "/images/team/mechanic.jpg",
-    description: "Certificado em tecnologias automotivas avançadas"
-  }
-];

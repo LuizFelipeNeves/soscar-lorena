@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function Home() {
+  const PROD = process.env.NODE_ENV === 'production' ? '' : 'https://soscar-lorena.vercel.app';
+
   return (
     <>
       <section className="relative h-[600px]">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <Image
-          src="/images/workshop.jpg"
+          src={`${PROD}/images/workshop.jpg`}
           alt="Oficina mecânica moderna"
           fill
           className="object-cover"
