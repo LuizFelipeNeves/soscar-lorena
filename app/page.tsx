@@ -8,7 +8,7 @@ export default function Home() {
       <section className="relative h-[600px]">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <Image
-          src="/workshop.jpg"
+          src="/images/workshop.jpg"
           alt="Oficina mecânica moderna"
           fill
           className="object-cover"

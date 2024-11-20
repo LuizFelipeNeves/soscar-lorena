@@ -22,7 +22,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-primary mb-5 mt-5">
               {img ? (<Image
-                src="/logo.png"
+                src="/images/logo.png"
                 alt="SOS CAR's"
                 width={150}
                 height={40}

@@ -14,7 +14,7 @@ export default function AboutPage() {
       <section className="relative h-[400px]">
         <div className="absolute inset-0 bg-black/60 z-10" />
         <Image
-          src="/workshop-team.jpg"
+          src="/images/workshop-team.jpg"
           alt="Equipe SOS CAR&apos;s"
           fill
           className="object-cover"
@@ -82,7 +82,7 @@ export default function AboutPage() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="/workshop-history.jpg"
+                src="/images/workshop-history.jpg"
                 alt="História da SOS CAR&apos;s"
                 fill
                 className="object-cover"
@@ -139,19 +139,19 @@ const team = [
   {
     name: "Carlos Silva",
     role: "Diretor Técnico",
-    image: "/team/director.jpg",
+    image: "/images/team/director.jpg",
     description: "25 anos de experiência em mecânica automotiva"
   },
   {
     name: "Ana Santos",
     role: "Gerente de Atendimento",
-    image: "/team/manager.jpg",
+    image: "/images/team/manager.jpg",
     description: "Especialista em experiência do cliente"
   },
   {
     name: "Roberto Oliveira",
     role: "Chefe de Mecânicos",
-    image: "/team/mechanic.jpg",
+    image: "/images/team/mechanic.jpg",
     description: "Certificado em tecnologias automotivas avançadas"
   }
 ];
