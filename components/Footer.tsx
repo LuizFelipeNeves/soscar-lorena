@@ -32,7 +32,7 @@ export default function Footer() {
                 R. Dr. José Machado Coelho de Castro nº 65 - Centro, Lorena, SP.
             </p>
             <p className="text-gray-300">
-              <Link href="/localizacao" className="text-primary hover:underline">
+              <Link href="/sobre#localizacao" className="text-primary hover:underline">
                 Veja no mapa
               </Link>
             </p>

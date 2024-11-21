@@ -152,7 +152,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50"  id="localizacao">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-secondary mb-6">
             Onde Estamos
