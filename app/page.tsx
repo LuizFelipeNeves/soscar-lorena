@@ -1,111 +1,82 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
-const features = [
-  {
-    title: "Experiência",
-    description: "Mais de 25 anos no mercado",
-    icon: "🏆",
-  },
-  {
-    title: "Garantia",
-    description: "Garantia em todos os serviços",
-    icon: "✓",
-  },
-  {
-    title: "Equipe Qualificada",
-    description: "Profissionais certificados",
-    icon: "👨‍🔧",
-  },
-  {
-    title: "Preço Justo",
-    description: "Orçamento transparente",
-    icon: "💰",
-  },
+type Feature = {
+  title: string;
+  description: string;
+  icon: string;
+};
+
+type Testimonial = {
+  name: string;
+  comment: string;
+  image: string;
+};
+
+type Promo = {
+  text: string;
+  image: string;
+  cta: string;
+};
+
+type Service = {
+  title: string;
+  description: string;
+  icon: string;
+};
+
+const features: Feature[] = [
+  { title: "Experiência", description: "Mais de 25 anos no mercado", icon: "🏆" },
+  { title: "Garantia", description: "Garantia em todos os serviços", icon: "✓" },
+  { title: "Equipe Qualificada", description: "Profissionais certificados", icon: "👨‍🔧" },
+  { title: "Preço Justo", description: "Orçamento transparente", icon: "💰" },
 ];
 
-const testimonials = [
+const testimonials: Testimonial[] = [
   {
     name: "João Silva",
     comment: "Excelente serviço! Rápido, eficiente e preço justo.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1887&q=80",
   },
   {
     name: "Maria Oliveira",
     comment: "Ótimo atendimento e profissionais muito competentes.",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=1887&q=80",
   },
   {
     name: "Pedro Santos",
     comment: "Resolveram o problema do meu carro rapidamente. Recomendo!",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1887&q=80",
   },
 ];
 
-const services = [
-  {
-    title: "Troca de Óleo",
-    description:
-      "Troca de óleo rápida e eficiente para manter seu motor funcionando perfeitamente.",
-    icon: "🛢️",
-  },
-  {
-    title: "Alinhamento 3D",
-    description:
-      "Alinhamento preciso com tecnologia 3D para maior segurança e economia de combustível.",
-    icon: "🔧",
-  },
-  {
-    title: "Troca de Pneus e Balanceamento",
-    description:
-      "Serviço completo de troca de pneus e balanceamento para uma condução suave.",
-    icon: "🚗",
-  },
-  {
-    title: "Manutenção de Câmbio",
-    description:
-      "Cuidados especializados para manter seu câmbio funcionando sem problemas.",
-    icon: "⚙️",
-  },
-  {
-    title: "Diagnóstico Eletrônico",
-    description:
-      "Diagnóstico preciso com equipamentos de última geração.",
-    icon: "💻",
-  },
-  {
-    title: "Ar Condicionado",
-    description:
-      "Manutenção e recarga do sistema de ar condicionado para seu conforto.",
-    icon: "❄️",
-  },
+const services: Service[] = [
+  { title: "Troca de Óleo", description: "Troca de óleo rápida e eficiente para manter seu motor funcionando.", icon: "🛢️" },
+  { title: "Alinhamento 3D", description: "Alinhamento preciso com tecnologia 3D para maior segurança.", icon: "🔧" },
+  { title: "Troca de Pneus e Balanceamento", description: "Troca de pneus e balanceamento para uma condução suave.", icon: "🚗" },
+  { title: "Manutenção de Câmbio", description: "Cuidados especializados para manter seu câmbio funcionando.", icon: "⚙️" },
+  { title: "Diagnóstico Eletrônico", description: "Diagnóstico preciso com equipamentos de última geração.", icon: "💻" },
+  { title: "Ar Condicionado", description: "Manutenção do ar condicionado para seu conforto.", icon: "❄️" },
 ];
 
-const promos = [
+const promos: Promo[] = [
   {
     text: "50% de desconto na troca de óleo!",
-    image:
-      "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     cta: "Aproveite Agora",
   },
   {
     text: "Alinhamento 3D grátis na compra de 4 pneus!",
-    image:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80",
     cta: "Saiba Mais",
   },
   {
     text: "Revisão completa com 30% de desconto!",
-    image:
-      "https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image: "https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
     cta: "Agende Já",
   },
 ];
@@ -145,9 +116,7 @@ const HeroSection = () => (
 const FeaturesSection = () => (
   <section className="py-16 bg-accent">
     <div className="max-w-7xl mx-auto px-4">
-      <h2 className="text-3xl font-bold text-center mb-12 text-secondary">
-        Por que nos escolher?
-      </h2>
+      <h2 className="text-3xl font-bold text-center mb-12 text-secondary">Por que nos escolher?</h2>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {features.map((feature) => (
           <FeatureCard key={feature.title} {...feature} />
@@ -157,7 +126,7 @@ const FeaturesSection = () => (
   </section>
 );
 
-const FeatureCard = ({ title, description, icon }) => (
+const FeatureCard = ({ title, description, icon }: Feature) => (
   <div className="text-center p-6 bg-white rounded-lg shadow-sm">
     <div className="text-4xl mb-4">{icon}</div>
     <h3 className="text-xl font-semibold mb-2 text-secondary">{title}</h3>
@@ -169,9 +138,7 @@ const FeatureCard = ({ title, description, icon }) => (
 const PromoSection = () => (
   <section className="py-16">
     <div className="max-w-7xl mx-auto px-4">
-      <h2 className="text-3xl font-bold text-center mb-12 text-primary">
-        Promoções Especiais
-      </h2>
+      <h2 className="text-3xl font-bold text-center mb-12 text-primary">Promoções Especiais</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {promos.map((promo, idx) => (
           <PromoCard key={idx} {...promo} />
@@ -181,7 +148,7 @@ const PromoSection = () => (
   </section>
 );
 
-const PromoCard = ({ text, image, cta }) => (
+const PromoCard = ({ text, image, cta }: Promo) => (
   <div className="relative rounded-lg overflow-hidden">
     <Image src={image} alt={text} width={500} height={300} className="object-cover w-full h-full" />
     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -201,9 +168,7 @@ const PromoCard = ({ text, image, cta }) => (
 const TestimonialsSection = () => (
   <section className="bg-light py-16">
     <div className="max-w-7xl mx-auto px-4">
-      <h2 className="text-3xl font-bold text-center mb-12 text-primary">
-        O que nossos clientes dizem
-      </h2>
+      <h2 className="text-3xl font-bold text-center mb-12 text-primary">O que nossos clientes dizem</h2>
       <div className="flex flex-wrap justify-center gap-8">
         {testimonials.map((testimonial, idx) => (
           <TestimonialCard key={idx} {...testimonial} />
@@ -213,7 +178,7 @@ const TestimonialsSection = () => (
   </section>
 );
 
-const TestimonialCard = ({ name, comment, image }) => (
+const TestimonialCard = ({ name, comment, image }: Testimonial) => (
   <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
     <div className="flex items-center mb-6">
       <Image
@@ -244,7 +209,7 @@ const ServicesSection = () => (
   </section>
 );
 
-const ServiceCard = ({ title, description, icon }) => (
+const ServiceCard = ({ title, description, icon }: Service) => (
   <div className="text-center p-6 bg-white rounded-lg shadow-sm">
     <div className="text-4xl mb-4">{icon}</div>
     <h3 className="text-xl font-semibold mb-2 text-secondary">{title}</h3>
