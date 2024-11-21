@@ -9,6 +9,9 @@ import { ServiceDetails } from "./steps/ServiceDetails";
 import { Confirmation } from "./steps/Confirmation";
 import { Progress } from "@/components/ui/progress";
 
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
 const steps = [
   { id: 1, title: "Dados Pessoais" },
   { id: 2, title: "Dados do Veículo" },
@@ -23,10 +26,24 @@ const loadFormData = () => {
     return savedData
       ? JSON.parse(savedData)
       : {
-          personalInfo: {},
-          vehicleInfo: {},
-          serviceDate: null,
-          serviceDetails: {},
+          personalInfo: {
+            name: "",
+            email: "",
+            phone: "",
+          },
+          vehicleInfo: {
+            model: "",
+            year: "",
+            plate: "",
+          },
+          serviceDate: {
+            date: "",
+            time: "",
+          },
+          serviceDetails: {
+            serviceType: "",
+            description: "",
+          },
         };
   }
   return {
@@ -103,14 +120,36 @@ export default function SchedulingForm() {
     // Here you would typically send the data to your backend
     console.log('Form submitted:', formData);
 
-    const jsonData = JSON.stringify(formData);
-    console.log('JSON Data:', jsonData);
+    // const jsonData = JSON.stringify(formData);
+
+    const payloadToSend = {
+      phoneNumber: `55${formData.personalInfo.phone}`,
+      appointmentDate: `${format(new Date(formData.serviceDate.date), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}`,
+      appointmentTime: formData.serviceDate?.time,
+      customerName: formData.personalInfo.name,
+    }
+
+    const r = await fetch('/api/agendar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payloadToSend),
+    });
+
+    const response = await r.json();
+    console.log('Response:', response);
+
+    if (!r.ok) {
+      throw new Error(response.error.message || "Failed to send message");
+    }
+
     // Show success message or redirect
 
     // Clear form data
     localStorage.removeItem("formData");
     
-    router.push('/agendar/sucesso');
+    router.push('/');
   };
 
   return (
